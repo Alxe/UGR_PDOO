@@ -28,6 +28,13 @@ class BadConsequence
     new(text, 0, 0, 0, true, Array.new, Array.new)
   end
   
+  def is_empty
+    not (@nVisibleTreasures == 0 and 
+        @nHiddenTreasures == 0 and 
+        @specificVisibileTreasures.empty? and 
+        @specificHiddenTreasures.empty?)
+  end
+  
   def to_s
     "BadConsequence{text=#{@text}, levels=#{@levels}, nVisibleTreasures=#{@nVisibleTreasures}, nHiddenTreasures=#{@nHiddenTreasures}, death=#{@death}, specificVisibleTreasure=#{@specificVisibleTreasures}, specificHiddenTreasures=#{@specificHiddenTreasures}}"
   end
