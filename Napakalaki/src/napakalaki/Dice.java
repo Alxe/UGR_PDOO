@@ -27,6 +27,6 @@ public class Dice {
     }
     
     public int nextNumber() {
-        return (1 + r.nextInt(5));
+        return (1 + r.nextInt(6));
     }
 }

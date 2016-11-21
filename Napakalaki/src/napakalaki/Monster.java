@@ -38,6 +38,14 @@ public class Monster {
     public BadConsequence getBc() {
         return bc;
     }
+    
+    public int getLevelsIsGained() {
+        return prize.getLevel();
+    }
+    
+    public int getTreasuresGained() {
+        return prize.getTreasures();
+    }
 
     @Override
     public String toString() {

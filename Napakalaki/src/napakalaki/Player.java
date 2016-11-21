@@ -38,23 +38,29 @@ class Player {
     }
     
     private void bringToLife() {
-        throw new UnsupportedOperationException();    
+        dead = false;  
     }
     
     private int getCombatLevel() {
-        throw new UnsupportedOperationException();    
+        int combatLevel = level;
+        
+        for(Treasure t : visibleTreasures) {
+            combatLevel += t.getBonus();
+        }
+        
+        return combatLevel;
     }
     
     private void incrementLevels(int l) {
-        throw new UnsupportedOperationException();    
+        level += l;
     }
     
     private void decrementLevels(int l) {
-        throw new UnsupportedOperationException();    
+        level -= l;  
     }
     
     private void setPendingBadConsequence(BadConsequence b) {
-        throw new UnsupportedOperationException();    
+        pendingBadConsequence = b;  
     }
     
     private void applyPrize(Monster m) {
@@ -70,11 +76,15 @@ class Player {
     }
     
     private int howManyVisibleTreasures(TreasureKind tKind) {
-        throw new UnsupportedOperationException();    
+        return (int) visibleTreasures
+                .stream()
+                .filter((t) -> t.getType() == tKind)
+                .count();
     }
     
     private void dieIfNoTreasures() {
-        throw new UnsupportedOperationException();    
+        if(visibleTreasures.isEmpty()
+                || hiddenTreasures.isEmpty()) { dead = true; }  
     }
     
     public boolean isDead() {
@@ -106,7 +116,8 @@ class Player {
     }
     
     public boolean validState() {
-        throw new UnsupportedOperationException();    
+        return (pendingBadConsequence == null) 
+                &&  (hiddenTreasures.size() <= 4);
     }
     
     public void initTreasures() {
@@ -114,7 +125,7 @@ class Player {
     }
     
     public int getLevels() {
-        throw new UnsupportedOperationException();    
+        return level;
     }
     
     public Treasure stealTrasure() {
@@ -122,23 +133,24 @@ class Player {
     }
     
     public void setEnemy(Player enemy) {
-        throw new UnsupportedOperationException();    
+        this.enemy = enemy;
     }
     
     private Treasure giveMeATreasure() {
         throw new UnsupportedOperationException();    
     }
     
-    public boolean CanISteal() {
+    public boolean canISteal() {
         return canISteal;
     }
     
     private boolean canYouGiveMeATreasure() {
-        throw new UnsupportedOperationException();    
+        return !visibleTreasures.isEmpty()
+                || !hiddenTreasures.isEmpty();
     }
     
     private void haveStolen() {
-        throw new UnsupportedOperationException();    
+        canISteal = false;    
     }
     
     public void discardAllTreasures() {
