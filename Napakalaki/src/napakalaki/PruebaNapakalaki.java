@@ -1,9 +1,6 @@
     package napakalaki;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -11,13 +8,17 @@ import java.util.stream.Collectors;
  * @author alexnp
  */
 public class PruebaNapakalaki {
+    
+    static CardDealer dealer = CardDealer.getInstance();
 
-    static List<Monster> monstruos = new ArrayList<>();
+    static List<Monster> monstruos = dealer.unusedMonsters;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        dealer.initCards();
         
         monstruosConNivelMayorADiez().stream().forEach(System.out::println); 
         monstruosConMalRolloNiveles().stream().forEach(System.out::println);
