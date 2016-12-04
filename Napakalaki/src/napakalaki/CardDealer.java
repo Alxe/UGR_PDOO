@@ -245,11 +245,27 @@ public class CardDealer {
     }
     
     public Treasure nextTreasure() {
-            throw new UnsupportedOperationException();
+            if(unusedTreasures.size() == 0) {
+                shuffleTreasures();
+                
+                List<Treasure> l = usedTreasures;
+                usedTreasures = unusedTreasures;
+                unusedTreasures = l;
+            }
+            
+            return unusedTreasures.remove(0);
     }
     
     public Monster nextMonster() {
-            throw new UnsupportedOperationException();
+            if(unusedMonsters.size() == 0) {
+                shuffleTreasures();
+                
+                List<Monster> l = usedMonsters;
+                usedMonsters = unusedMonsters;
+                unusedMonsters = l;
+            }
+            
+            return unusedMonsters.remove(0);
     }
     
     public void giveTreasureBack(Treasure t) {

@@ -43,50 +43,93 @@ public class Napakalaki {
     }
     
     private Player nextPlayer() {
-        throw new UnsupportedOperationException();        
+        int idx_player = (currentPlayer != null) 
+                ? ((players.indexOf(currentPlayer) + 1) % players.size())
+                : (int) Math.round(Math.random() *  (players.size() - 1));
+        
+        return currentPlayer = players.get(idx_player);
     }
     
     private boolean nextTurnAllowed() {
-        throw new UnsupportedOperationException();    
+        return (currentPlayer == null) || currentPlayer.validState();
     }
     
     private void setEnemies() {
-        throw new UnsupportedOperationException();    
+        for(Player p : players) {
+            Player pe;
+            
+            do {
+                pe = players.get(
+                        (int) Math.round(Math.random() *  (players.size() - 1)));
+            } while(p == pe);
+            
+            p.setEnemy(pe);
+        }
     }
     
     public CombatResult developCombat() {
-        throw new UnsupportedOperationException();    
+        CombatResult cr = currentPlayer.combat(currentMonster);
+        
+        dealer.giveMonsterBack(currentMonster);
+        
+        return cr;
     }
     
     public void discardVisibleTreasures(Treasure... treasures) {
-        throw new UnsupportedOperationException();    
+       for(Treasure t : treasures) {
+           currentPlayer.discardVisibleTreasure(t);
+           
+           dealer.giveTreasureBack(t);
+           
+       }  
     }
     
     public void discardHiddenTreasures(Treasure... treasures) {
-        throw new UnsupportedOperationException();    
+          for(Treasure t : treasures) {
+           currentPlayer.discardHiddenTreasure(t);
+           
+           dealer.giveTreasureBack(t);
+           
+       }   
     }
     
     public void makeTreasuresVisibles(Treasure... treasures) {
-        throw new UnsupportedOperationException();    
+        for(Treasure t : treasures) {
+            currentPlayer.makeTreasureVisible(t);
+        }
     }
     
-    public void initGame(String... players) {
-        throw new UnsupportedOperationException();    
+    public void initGame(String... names) {
+        initPlayers(names);
+        setEnemies();
+        dealer.initCards();
+        nextTurn();
     }
     
     public Player getCurrentPlayer() {
-        throw new UnsupportedOperationException();    
+        return currentPlayer;
     }
     
     public Monster getCurrentMonster() {
-        throw new UnsupportedOperationException();
+        return currentMonster;
     }
     
     public boolean nextTurn() {
-        throw new UnsupportedOperationException();    
+       boolean stateOk = nextTurnAllowed() 
+                         && currentPlayer.validState();
+       
+       if(stateOk) {
+           Monster currentMonster = dealer.nextMonster();
+           
+           currentPlayer = nextPlayer();
+           
+           if(currentPlayer.isDead()) { currentPlayer.initTreasures(); }
+       }
+               
+       return stateOk;
     }
     
     public boolean endOfGame(CombatResult result) {
-        throw new UnsupportedOperationException();    
+        return result == CombatResult.WINGAME; 
     }
 }

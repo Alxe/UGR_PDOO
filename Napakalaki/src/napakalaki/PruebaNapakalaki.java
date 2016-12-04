@@ -17,7 +17,8 @@ public class PruebaNapakalaki {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        System.out.println("💩".length());
+        if(true) return;
         dealer.initCards();
         
         monstruosConNivelMayorADiez().stream().forEach(System.out::println); 

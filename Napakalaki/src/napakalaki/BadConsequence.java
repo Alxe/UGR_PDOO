@@ -79,6 +79,12 @@ public class BadConsequence {
     public List<TreasureKind> getSpecificHiddenTreasure() {
         return specificHiddenTreasure;
     }
+
+    void substractVisibleTreasure(Treasure t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
-    
+    void substractHiddenTreasure(Treasure t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
