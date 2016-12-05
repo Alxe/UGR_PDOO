@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author alexnp
  */
-class Player {
+public class Player {
     protected static int MAXLEVEL = 10;
     
     private String name;
@@ -89,7 +89,10 @@ class Player {
     }
     
     private boolean canMakeTreasureVisible(Treasure t) {
-        throw new UnsupportedOperationException();     
+        return visibleTreasures.stream()
+                               .noneMatch((treasure) -> 
+                                    { return (treasure.getType() == t.getType()); }
+                               );
     }
     
     private int howManyVisibleTreasures(TreasureKind tKind) {
@@ -141,6 +144,11 @@ class Player {
             
             return CombatResult.LOSE;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" + "name=" + name + ", level=" + level + ", dead=" + dead + '}';
     }
     
     public void makeTreasureVisible(Treasure t) {
@@ -202,7 +210,7 @@ class Player {
         return level;
     }
     
-    public Treasure stealTrasure() {
+    public Treasure stealTreasure() {
         Treasure treasure = null;
         
         boolean canI = canISteal();

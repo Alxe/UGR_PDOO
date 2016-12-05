@@ -28,4 +28,9 @@ public class Treasure {
     public TreasureKind getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Treasure{" + "name=" + name + ", bonus=" + bonus + ", type=" + type + '}';
+    }
 }

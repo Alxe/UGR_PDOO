@@ -29,14 +29,12 @@ public class Napakalaki {
     
     private Monster currentMonster;
     
-    private int playerIndex;
-    
     private Napakalaki() {
         this.dealer = CardDealer.getInstance();
         this.players = new ArrayList<>();
     }
     
-    private void initPlayers(String... names) {
+    private void initPlayers(List<String> names) {
         for(String s : names) {
             players.add(new Player(s));
         }
@@ -75,7 +73,7 @@ public class Napakalaki {
         return cr;
     }
     
-    public void discardVisibleTreasures(Treasure... treasures) {
+    public void discardVisibleTreasures(List<Treasure> treasures) {
        for(Treasure t : treasures) {
            currentPlayer.discardVisibleTreasure(t);
            
@@ -84,7 +82,7 @@ public class Napakalaki {
        }  
     }
     
-    public void discardHiddenTreasures(Treasure... treasures) {
+    public void discardHiddenTreasures(List<Treasure> treasures) {
           for(Treasure t : treasures) {
            currentPlayer.discardHiddenTreasure(t);
            
@@ -93,13 +91,13 @@ public class Napakalaki {
        }   
     }
     
-    public void makeTreasuresVisibles(Treasure... treasures) {
+    public void makeTreasuresVisibles(List<Treasure> treasures) {
         for(Treasure t : treasures) {
             currentPlayer.makeTreasureVisible(t);
         }
     }
     
-    public void initGame(String... names) {
+    public void initGame(List<String> names) {
         initPlayers(names);
         setEnemies();
         dealer.initCards();
@@ -115,11 +113,10 @@ public class Napakalaki {
     }
     
     public boolean nextTurn() {
-       boolean stateOk = nextTurnAllowed() 
-                         && currentPlayer.validState();
+       boolean stateOk = nextTurnAllowed();
        
        if(stateOk) {
-           Monster currentMonster = dealer.nextMonster();
+           currentMonster = dealer.nextMonster();
            
            currentPlayer = nextPlayer();
            
